@@ -1,13 +1,11 @@
+import mitmproxy
 import logging
 
+class HttpRequestLogger:
+    def request(self, flow: mitmproxy.http.HTTPFlow):
+        # HTTP isteği geldiğinde bu fonksiyon çalışacak
+        logging.info(f"HTTP isteği alındı: {flow.request.method} {flow.request.url}")
+        # İsteği değiştirebilirsiniz
+        # flow.request.headers["User-Agent"] = "Custom User-Agent"
 
-class Counter:
-    def __init__(self):
-        self.num = 0
-
-    def request(self, flow):
-        self.num = self.num + 1
-        logging.info("We've seen %d flows" % self.num)
-
-
-addons = [Counter()]
+addons = [HttpRequestLogger()]
