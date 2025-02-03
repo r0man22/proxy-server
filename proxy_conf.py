@@ -4,25 +4,32 @@ import ssl
 
 class ProxyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
-        # Bağlantı hedefini değiştirin
-        target_url = self.path  # Burada herhangi bir URL'yi işleyebilirsiniz
+        target_url = self.path 
 
-        # Bağlantıyı tekrar sunucuya yönlendirin
         connection = http.client.HTTPConnection(target_url)
         connection.request("GET", target_url)
         response = connection.getresponse()
 
-        # Yanıtı alın ve sunucuya gönderin
         self.send_response(response.status)
         self.send_header('Content-Type', response.getheader('Content-Type'))
         self.end_headers()
         self.wfile.write(response.read())
 
     def do_POST(self):
-        # Aynı şekilde POST işlemleri için işlemi gerçekleştirin
         target_url = self.path
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
+
+
+
+
+
+
+
+
+
+
+
 
         connection = http.client.HTTPConnection(target_url)
         connection.request("POST", target_url, body=post_data, headers=self.headers)
